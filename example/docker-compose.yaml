@@ -1,0 +1,28 @@
+
+# in-memory mode
+version: "3.8"
+
+services:
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamodb-local
+    command: ["-jar", "DynamoDBLocal.jar", "-inMemory", "-sharedDb"]
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+## consistent mode
+# version: "3.8"
+
+# services:
+#   dynamodb-local:
+#     image: amazon/dynamodb-local:latest
+#     container_name: dynamodb-local
+#     command: ["-jar", "DynamoDBLocal.jar", "-sharedDb"]
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./dynamodb-data:/home/dynamodblocal/data
+#     environment:
+#       - DYNAMODB_DATA_DIR=/home/dynamodblocal/data
+#     restart: unless-stopped
