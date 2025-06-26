@@ -14,6 +14,7 @@ type (
 )
 
 var (
+	_ querySpec         = (*CtxQuery)(nil)
 	_ apiSpec           = (*Client)(nil)
 	_ crudSpec          = (*cruder)(nil)
 	_ controlPlane      = (*Client)(nil)
@@ -22,6 +23,39 @@ var (
 
 // just spec, not implements guide
 type (
+	querySpec interface {
+		Context() context.Context
+		SetContext(c context.Context) *CtxQuery
+		SetTable(t string) *CtxQuery
+		SetItem(m map[string]types.AttributeValue) *CtxQuery
+		SetKey(m map[string]types.AttributeValue) *CtxQuery
+		SetConsistentRead(cr bool) *CtxQuery
+		SetStartKey(m PaginationKey) *CtxQuery
+		SetIndex(idx string) *CtxQuery
+		SetLimit(l int32) *CtxQuery
+		SetOrderByAsc(asc bool) *CtxQuery
+		SetSelectAttr(s types.Select) *CtxQuery
+		SetCondExpr(expr *string) *CtxQuery
+		SetKeyCondExpr(expr *string) *CtxQuery
+		SetFilterExpr(expr *string) *CtxQuery
+		SetProjectExpr(expr *string) *CtxQuery
+		SetUpdateExpr(expr *string) *CtxQuery
+		SetExprAttrNames(names map[string]string) *CtxQuery
+		SetExprAttrValues(values map[string]types.AttributeValue) *CtxQuery
+		SetBatchWriteItems(items map[string][]types.WriteRequest) *CtxQuery
+		SetBatchGetItems(items map[string]types.KeysAndAttributes) *CtxQuery
+		SetTransactionWriteItems(items []types.TransactWriteItem) *CtxQuery
+		SetClientRequestToken(token string) *CtxQuery
+		SetTransactionGetItems(items []types.TransactGetItem) *CtxQuery
+		SetReturnValues(rv types.ReturnValue) *CtxQuery
+		SetReturnValuesOnConditionCheckFailure(rv types.ReturnValuesOnConditionCheckFailure) *CtxQuery
+		SetKeyCondBuilder(kcb *KeyCondBuilder) *CtxQuery
+
+		AppendBatchWriteItems(table string, items []types.WriteRequest) *CtxQuery
+		AppendTransactionWriteItems(items []types.TransactWriteItem) *CtxQuery
+		AppendTransactionGetItems(items []types.TransactGetItem) *CtxQuery
+	}
+
 	apiSpec interface {
 		Get(query *CtxQuery, output any) error
 		Query(query *CtxQuery, output any) (count int32, lastEvaluatedKey PaginationKey, err error)
