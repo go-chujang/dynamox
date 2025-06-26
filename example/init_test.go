@@ -15,16 +15,16 @@ var cli *dynamox.Client
 
 func init() {
 	var (
-		accesskey      = "test"
-		secretkey      = "test"
-		region         = "ap-northeast-2" // "us-east-1"
-		localstackhost = "http://localhost:8000"
-		cred           = credentials.NewStaticCredentialsProvider(accesskey, secretkey, "")
-		awsCfg, _      = config.LoadDefaultConfig(
+		accesskey = "test"
+		secretkey = "test"
+		region    = "ap-northeast-2"
+		localAddr = "http://localhost:8000"
+		cred      = credentials.NewStaticCredentialsProvider(accesskey, secretkey, "")
+		awsCfg, _ = config.LoadDefaultConfig(
 			context.Background(),
 			config.WithRegion(region),
 			config.WithCredentialsProvider(cred),
-			config.WithBaseEndpoint(localstackhost),
+			config.WithBaseEndpoint(localAddr),
 		)
 	)
 	cli = dynamox.NewClient(awsCfg)

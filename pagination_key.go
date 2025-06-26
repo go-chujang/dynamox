@@ -14,6 +14,10 @@ var (
 	_ json.Unmarshaler = (*PaginationKey)(nil)
 )
 
+func (pgk PaginationKey) LastEvaluatedKey() map[string]types.AttributeValue {
+	return pgk
+}
+
 func (pgk *PaginationKey) Import(token string) (PaginationKey, error) {
 	if token == "" {
 		return nil, nil

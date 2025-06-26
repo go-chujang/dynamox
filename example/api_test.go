@@ -52,11 +52,7 @@ func Test_apitest(t *testing.T) {
 	}
 	var (
 		equalFn  = func(x, y FooBar) bool { return x.Foo == y.Foo && x.Bar == y.Bar }
-		testData = []FooBar{
-			newTestData(),
-			newTestData(),
-			newTestData(),
-		}
+		testData = []FooBar{newTestData(), newTestData(), newTestData()}
 	)
 
 	// Put

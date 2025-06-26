@@ -235,14 +235,35 @@ func Test_keyeditem(t *testing.T) {
 		}
 	}
 	for _, v := range items {
-		m, err := dynamox.MarshalMap(v)
+		// m, err := dynamox.MarshalMap(v)
+		// if err != nil {
+		// 	t.Fatal(err)
+		// }
+		// if err = cli.Put(dynamox.NewCtxQuery(t.Context()).SimplePut(table, m)); err != nil {
+		// 	t.Fatal(err)
+		// }
+		err := cli.Cruder().Create(t.Context(), v, true)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if err = cli.Put(dynamox.NewCtxQuery(t.Context()).SimplePut(table, m)); err != nil {
-			t.Fatal(err)
-		}
 	}
+	profileKeyForRead := profile{base: pk123}
+	err = cli.Cruder().Read(t.Context(), &profileKeyForRead)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(profileKeyForRead.Email) == 0 {
+		t.Fatal("failed to read - profile")
+	}
+	bookmarkKeyForRead := bookmark{base: pk123, Url: "https://aws.amazon.com"}
+	err = cli.Cruder().Read(t.Context(), &bookmarkKeyForRead)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(bookmarkKeyForRead.Title) == 0 {
+		t.Fatal("failed to read - bookmark")
+	}
+
 	// pk123
 	var (
 		bundle123 bundle
